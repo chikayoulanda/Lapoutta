@@ -1,0 +1,149 @@
+<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+  <div class="profile-info-inner">
+    <div class="profile-img">
+      <img src="/images/uploads/<%= product[0].gambar%>" alt="<%= product[0].gambar%>" />
+    </div>
+  </div>
+</div>
+<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+  <div class="product-payment-inner-st res-mg-t-30 analysis-progrebar-ctn">
+    <ul id="myTabedu1" class="tab-review-design">
+      <li class="active"><a href="#description">Detail Produk</a></li>
+      <li><a href="#review"> Review</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content custom-product-edit st-prf-pro">
+      <div class="product-tab-list tab-pane fade active in" id="description">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="review-content-section">
+              <!-- <div class="row"> -->
+              <!-- <form action="#"> -->
+              <div class="col-lg-12">
+                <div class="form-group-inner">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <div class="content-profile">
+                        <label class="login2">Nama</label>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                      <label class="login2">:</label>
+                      <label class="login2">
+                        <%= product[0].name%></label>
+                      <!-- <input type="text" class="form-control" placeholder="Enter Email" /> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group-inner">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <label class="login2">Harga</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                      <label class="login2">:</label>
+                      <label class="login2">
+                        <%= product[0].price%></label>
+                      <!-- <input type="password" class="form-control" placeholder="password" /> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group-inner">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <label class="login2">Kategori</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                      <label class="login2">:</label>
+                      <label class="login2">
+                        <%= product[0].id_category.name%></label>
+                      <!-- <input type="password" class="form-control" placeholder="password" /> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group-inner">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <label class="login2">Nama Toko</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                      <label class="login2">:</label>
+                      <label class="login2">
+                        <%= product[0].id_store.name%></label>
+                      <!-- <input type="password" class="form-control" placeholder="password" /> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group-inner">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <label class="login2">Alamat Toko</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                      <label class="login2">:</label>
+                      <label class="login2">
+                        <%= product[0].id_store.address%></label>
+                      <!-- <input type="password" class="form-control" placeholder="password" /> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group-inner">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                      <label class="login2">Deskripsi</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                      <label class="login2">:</label>
+                      <label class="login2">
+                        <%= product[0].description%></label>
+                      <!-- <input type="password" class="form-control" placeholder="password" /> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- </form> -->
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="product-tab-list tab-pane fade" id="review">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="review-content-section">
+              <div class="chat-discussion" style="height: auto">
+                <%
+                  for(var _index=0; _index < review.length; _index++) {
+                    var _review = review[_index];
+                    %>
+                <div class="chat-message">
+                  <div class="profile-hdtc">
+                    <img class="message-avatar" src="/images/uploads/<%= _review.id_customer.image%>"" alt="">
+                  </div>
+                  <div class="
+                      message">
+                    <a class="message-author" href="#">
+                      <%= _review.id_customer.name%></a>
+                    <!-- <span class="message-date"> Mon Jan 26 2015 - 18:39:23 </span> -->
+                    <span class="message-content">
+                      <%= _review.body%></span>
+                  </div>
+                </div>
+                <%}%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

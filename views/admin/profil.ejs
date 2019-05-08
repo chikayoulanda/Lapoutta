@@ -1,0 +1,117 @@
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <div class="profile-info-inner">
+            <form action="/photo" method="POST" enctype="multipart/form-data">
+                <div class="profile-img">
+                    <div class="file-button">
+                        <img src="/images/uploads/<%= data[0].image%>" alt="<%= data[0].image%>" />
+                        <input type="file" name="image" id="image">
+                    </div>
+                </div>
+                <div class="profile-img">
+                    <div class="file-button">
+                        <button>Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+        <div class="product-status-wrap">
+            <h4>Data Saya</h4>
+            <div class="add-product">
+                <a href="/change/data/web" class="fa fa-pencil-square-o" data-toggle="tooltip" title="Edit-Data"></a>
+            </div>
+            <div id="myTabContent" class="tab-content custom-product-edit st-prf-pro">
+                <div class="product-tab-list tab-pane fade active in" id="description">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="review-content-section">
+                                <div class="row">
+                                    <form action="#">
+                                        <div class="col-lg-12">
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="content-profile">
+                                                            <label class="login2">Nama</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                        <label class="login2">:</label>
+                                                        <label class="login2">
+                              <%= data[0].name%></label>
+                                                        <!-- <input type="text" class="form-control" name="name"/> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <label class="login2">Jenis Kelamin</label>
+                                                    </div>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                        <label class="login2">:</label>
+                                                        <label class="login2">
+                              <%= data[0].gender%></label>
+                                                        <!-- <input type="password" class="form-control" placeholder="password" /> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <label class="login2">Alamat</label>
+                                                    </div>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                        <label class="login2">:</label>
+                                                        <label class="login2">
+                              <%= address[0].address%></label>
+                                                        <!-- <input type="password" class="form-control" placeholder="password" /> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <label class="login2">Nomor Telepon</label>
+                                                    </div>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                        <label class="login2">:</label>
+                                                        <label class="login2">
+                              <%= data[0].no_telp%></label>
+                                                        <!-- <input type="password" class="form-control" placeholder="password" /> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="form-group-inner">
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <label class="login2">Email</label>
+                                                    </div>
+                                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                                        <label class="login2">:</label>
+                                                        <label class="login2">
+                              <%= req.session.User.email%></label>
+                                                        <!-- <input type="password" class="form-control" placeholder="password" /> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
