@@ -32,6 +32,10 @@ module.exports = {
       type:'string'
     },
 
+    kecamatan:{
+      type:'string'
+    },
+
     id_customer:{
       model:'customer'
     },

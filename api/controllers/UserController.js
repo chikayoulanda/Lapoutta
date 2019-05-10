@@ -149,7 +149,7 @@ module.exports = {
     },
 
     changePhoto: async function(req, res) {
-        req.file('image').upload({ dirname: '../../assets/images/uploads/', maxBytes: 10000000 }, function(err, files) {
+        req.file('image').upload({ dirname: '../../.tmp/public/images/uploads/', maxBytes: 10000000 }, function(err, files) {
             // req.file('image').upload({ dirname: '../../assets/images/uploads/' }, function(err, data) {
             // console.log(data)
             if (files.length === 0) {

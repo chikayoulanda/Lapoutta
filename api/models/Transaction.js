@@ -54,7 +54,11 @@ module.exports = {
             collection: 'shipment',
             via: 'id_transaction'
         },
-
+        
+        billing:{
+            collection:'billing',
+            via:'code'
+        }
     },
 
 };

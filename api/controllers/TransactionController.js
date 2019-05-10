@@ -66,8 +66,18 @@ module.exports = {
             id_payment_status: 1
         }
         if (data_payment.id_transaction != null && data_payment.id_customer != null) {
-            var _payment = await Payment_confirmation.create(data_payment).fetch()
-            return res.send(_payment)
+            Payment_confirmation.create(data_payment).exec(function(err, _payment){
+                var _data = {
+                    body: "Confirmation of payment has been made",
+                    title: "Payment Confirmation",
+                    role: "product",
+                    id_receiver: 1,
+                    id_request:_payment.id_customer
+                }
+                Notif.create(_data).exec(function (err, _next) {
+                    return res.send(_payment)
+                })
+            })
         }
     },
 
@@ -218,13 +228,31 @@ module.exports = {
     },
 
     detail:function(req, res){
-        Transaction_detail.find({id_transaction:req.param('id')}).populate('id_customer').populate('id_product').populate('id_transaction').exec(function(err, _detail){
-            Address.find({id_customer:_detail[0].id_customer}).exec(function(err, _cust){
-                return res.view('transaction/detail',{
-                    data:_detail,
-                    cus:_cust
+            Transaction.find({id:req.param("id")}).populate('id_customer').exec(function(err, _trans){
+                Address.find({id_customer:_trans.id_customer}).exec(function(err, _cust){
+                    return res.view('transaction/detail',{
+                        trans:_trans,
+                        cus:_cust
+                    })
                 })
             })
+    },
+    
+    listNotif:function(req, res){
+        Notif.find({id_receiver:req.session.Customer.id}).sort({id:'DESC'}).limit('5').exec(function(err, _notif){
+            return res.json(_notif)
         })
-    } 
+    },
+
+    update:function(req, res){
+        Transaction.update({id:req.param("id")},{
+            id_transaction_status:req.param("id_transaction_status")
+        }).then(function(_update){
+            Transaction.find({id:req.param("id")}).exec(function(err, _trans){
+                return res.send(_trans)
+            })
+        })
+    },
+
+
 };

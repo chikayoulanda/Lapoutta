@@ -65,7 +65,16 @@ module.exports.routes = {
     'GET /edit/banner/:id': 'SlideController.update',
     'GET /delete/banner/:id': 'SlideController.delete',
 
-    // 'GET /list/banner/lala': 'SlideController.list',
+    'GET /delete/shipment/status/:id': 'ShipmentController.delete',
+    'GET /edit/shipment/:id': 'ShipmentController.update',
+
+    'GET /detail/taransaksi/web/:id': 'TransactionController.detail',
+
+    'GET /list/billing/web': 'BillingController.view',
+    'GET /detail/billing/:id': 'BillingController.detail',
+    'GET /detail/billing' : 'BillingController.detail',       
+    'GET /find/billing/web': 'BillingController.find',
+    'GET /confirmation/billing': 'BillingController.viewConfirm',
     //=========================POST WEB===================================
 
     'POST /register': 'UserController.register',
@@ -116,13 +125,11 @@ module.exports.routes = {
 
     'POST /new/shipment/status': 'ShipmentController.create',
     'POST /edit/shipment/status': 'ShipmentController.edit',
-    'GET /delete/shipment/status/:id': 'ShipmentController.delete',
-    'GET /edit/shipment/:id': 'ShipmentController.update',
-
+    
     'POST /create/banner': 'SlideController.create',
     'POST /update/banner': 'SlideController.edit',
 
-    'GET /detail/taransaksi/web/:id': 'TransactionController.detail',
+    'POST /confirm/billing': 'BillingController.confirm', 
     //================================POST API=================================
 
     'POST /login/mobile': 'ApiUserController.login',
@@ -162,6 +169,7 @@ module.exports.routes = {
     'POST /list/transksi/user': 'TransactionController.listTransaksiUser',
     'POST /list/transaction/store': 'TransactionController.listTransStore',
     'POST /transaction/ongkir': 'TransactionController.ongkir',
+    'POST /update/status/transaksi': 'TransactionController.update',
 
     'POST /list/status/transaction': 'TransactionStatusController.listApi',
 
@@ -187,6 +195,8 @@ module.exports.routes = {
     'POST /update/category/api': 'CategoryProductController.uodateApi',
 
     'POST /listApi/bank': 'BankController.listApi',
+
+    'POST /detail/billing': 'BillingController.detailApi',
     //===================================GET API===================================
 
     'GET /list/review': 'ReviewController.list',
@@ -207,4 +217,6 @@ module.exports.routes = {
     'GET /list/shipment/status/api': 'ShipmentController.listApi',
 
     'GET /list/status/transaksi': 'TransactionStatusController.listTransApi',
+
+    'GET /list/billing': 'BillingController.list',
 };

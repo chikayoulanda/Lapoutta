@@ -23,13 +23,26 @@ module.exports = {
             address: req.param("address"),
             provinsi: req.param("provinsi"),
             kabupatenKota: req.param("kabupatenKota"),
+            kecamatan:req.param('kecamatan'),
             id_customer: req.param("id_customer"),
             no_KTP: req.param("no_KTP"),
             no_Rekening: req.param("no_Rekening"),
             id_store_status: 1
         }
-        var data = await Store.create(newRequest).fetch()
-        return res.send(data)
+        // var data = await Store.create(newRequest).fetch()
+        // return res.send(data)
+        Store.create(newRequest).exec(function(err, _data){
+            var _data = {
+                body: "Request store form customer",
+                title: "Request Store",
+                role: "Store",
+                id_receiver: 1,
+                id_request:_data.id
+            }
+            Notif.create(_data).exec(function (err, _next) {
+                return res.send(_data)
+            })
+        })
     },
 
     status: async function (req, res) {
