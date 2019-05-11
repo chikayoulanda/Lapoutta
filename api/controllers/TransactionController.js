@@ -7,7 +7,7 @@
 const crypto = require('crypto');
 
 module.exports = {
-    orderNow: async function(req, res) {
+    orderNow: async function (req, res) {
         var _newTrans = {
             id_customer: req.param("id_customer"),
             id_shipment: 1,
@@ -30,8 +30,8 @@ module.exports = {
                     id_product: _product,
                     id_transaction: trans.id
                 }
-                return Transaction_detail.create(_detailTrans).then(function(err, _detail) {
-                    Transaction_detail.find({ id_transaction: trans.id }).exec(function(err, _transNow) {
+                return Transaction_detail.create(_detailTrans).then(function (err, _detail) {
+                    Transaction_detail.find({ id_transaction: trans.id }).exec(function (err, _transNow) {
                         return res.json(_transNow)
                     })
                 })
@@ -43,8 +43,8 @@ module.exports = {
                     id_product: _product,
                     id_transaction: trans.id
                 }
-                return Transaction_detail.create(_detailTrans).then(function(err, _detail) {
-                    Transaction_detail.find({ id_transaction: trans.id }).exec(function(err, _transNow) {
+                return Transaction_detail.create(_detailTrans).then(function (err, _detail) {
+                    Transaction_detail.find({ id_transaction: trans.id }).exec(function (err, _transNow) {
                         return res.json(_transNow)
                     })
                 })
@@ -55,7 +55,7 @@ module.exports = {
 
     },
 
-    payment: async function(req, res) {
+    payment: async function (req, res) {
         var data_payment = {
             transfer_from: req.param("transfer_from"),
             transfer_to: req.param("transfer_to"),
@@ -66,30 +66,33 @@ module.exports = {
             id_payment_status: 1
         }
         if (data_payment.id_transaction != null && data_payment.id_customer != null) {
-            Payment_confirmation.create(data_payment).exec(function(err, _payment){
+            var _payment = await Payment_confirmation.create(data_payment).fetch()
+            Transaction.update({ id: _payment.id_transaction }, {
+                id_transaction_status: 8
+            }).then(function (err, _data) {
                 var _data = {
                     body: "Confirmation of payment has been made",
                     title: "Payment Confirmation",
                     role: "product",
                     id_receiver: 1,
-                    id_request:_payment.id_customer
+                    id_request: _payment.id_customer
                 }
-                Notif.create(_data).exec(function (err, _next) {
+                Notif.create(_data).then(function (err, _next) {
                     return res.send(_payment)
                 })
             })
         }
     },
 
-    checkout: function(req, res) {
+    checkout: function (req, res) {
         var _checkout = {
             id_customer: req.param("id_customer"),
             id_shipment: 1,
             no_order: crypto.randomBytes(4).toString('hex'),
             id_transaction_status: 1
         }
-        Cart.find({ id_customer: _checkout.id_customer }).populate('id_product').exec(function(err, _cart) {
-            Store.find().where({ id: _cart[0].id_product.id_store }).exec(async function(err, _store) {
+        Cart.find({ id_customer: _checkout.id_customer }).populate('id_product').exec(function (err, _cart) {
+            Store.find().where({ id: _cart[0].id_product.id_store }).exec(async function (err, _store) {
                 if (_store[0].id_customer === _checkout.id_customer) {
                     return res.json("this is your product")
                 }
@@ -111,9 +114,9 @@ module.exports = {
                             id_product: data[0].id_product,
                             id_transaction: _trans.id
                         }
-                        return Transaction_detail.create(_product).then(async function(err, _cart) {
+                        return Transaction_detail.create(_product).then(async function (err, _cart) {
                             var _data = await Cart.destroy({ id: data[0].id }).fetch()
-                            Transaction_detail.find({ id_transaction: _trans.id }).exec(function(err, _transNow) {
+                            Transaction_detail.find({ id_transaction: _trans.id }).exec(function (err, _transNow) {
                                 return res.json(_transNow)
                             })
                         })
@@ -137,7 +140,7 @@ module.exports = {
                             var _cart = await Cart.destroy({ id: data[i].id })
 
                         }
-                        Transaction_detail.find({ id_transaction: _trans.id }).exec(function(err, _transNow) {
+                        Transaction_detail.find({ id_transaction: _trans.id }).exec(function (err, _transNow) {
                             return res.json(_transNow)
                         })
                     }
@@ -146,11 +149,11 @@ module.exports = {
         })
     },
 
-    view: function(req, res) {
+    view: function (req, res) {
         return res.view('transaction/list')
     },
 
-    list: async function(req, res) {
+    list: async function (req, res) {
         console.log("====== list store status ======")
         var _transactionStatus = await Transaction.find({
             select: ['id', 'no_order', 'id_transaction_status']
@@ -161,94 +164,94 @@ module.exports = {
         return res.json(data);
     },
 
-    listApi: function(req, res) {
+    listApi: function (req, res) {
         console.log("++list==")
-        Transaction_detail.find({ id_transaction: req.param("id_transaction") }).exec(function(err, _trans) {
+        Transaction_detail.find({ id_transaction: req.param("id_transaction") }).exec(function (err, _trans) {
             return res.send(_trans)
         })
     },
 
-    listTransaction: function(req, res) {
+    listTransaction: function (req, res) {
         console.log("++list transaksi==")
-        Transaction.find({ id: req.param("id") }).exec(function(err, _trans) {
+        Transaction.find({ id: req.param("id") }).exec(function (err, _trans) {
             return res.send(_trans)
         })
     },
 
-    listTransaksiUser: function(req, res) {
+    listTransaksiUser: function (req, res) {
         console.log("list transaksi berdasrkan id_user")
-        Transaction.find({ id_customer: req.param("id_customer") }).exec(function(err, _trans) {
+        Transaction.find({ id_customer: req.param("id_customer") }).exec(function (err, _trans) {
             return res.send(_trans)
         })
     },
 
-    detailTrans: function(req, res) {
-        Transaction.find({ id: req.param("id") }).exec(function(err, _detail) {
+    detailTrans: function (req, res) {
+        Transaction.find({ id: req.param("id") }).exec(function (err, _detail) {
             return res.send(_detail)
         })
     },
 
-    listTransStore: function(req, res) {
+    listTransStore: function (req, res) {
         console.log("===Masuk=====")
-        Store.find({ id: req.param("id") }).populate('product').exec(function(err, _store) {
+        Store.find({ id: req.param("id") }).populate('product').exec(function (err, _store) {
             console.log(_store)
-            Transaction_detail.find({ id_product: _store[0].product.id }).exec(function(err, _list) {
-                Transaction.find({ id: _list[0].id_transaction }).exec(function(err, _transaction) {
+            Transaction_detail.find({ id_product: _store[0].product.id }).exec(function (err, _list) {
+                Transaction.find({ id: _list[0].id_transaction }).exec(function (err, _transaction) {
                     return res.send(_transaction)
                 })
             })
         })
     },
 
-    listApiStore: function(req, res) {
+    listApiStore: function (req, res) {
         console.log("===Masuk=====")
-        Store.find({ id: req.param("id") }).populate('product').exec(function(err, _store) {
+        Store.find({ id: req.param("id") }).populate('product').exec(function (err, _store) {
             console.log(_store)
-            Transaction_detail.find({ id_product: _store[0].product.id }).exec(function(err, _list) {
+            Transaction_detail.find({ id_product: _store[0].product.id }).exec(function (err, _list) {
                 return res.send(_list)
             })
         })
     },
 
-    updateship: async function(req, res) {
+    updateship: async function (req, res) {
         var _update = await Transaction.update({ id: req.param("id") }, {
             id_shipment: req.param("id_shipment")
         }).fetch()
         return res.send(_update)
     },
 
-    ongkir: function(req, res) {
+    ongkir: function (req, res) {
         Transaction.update({ id: req.param("id") }, {
             ongkir: req.param("ongkir")
-        }).exec(function(err, _ongkir) {
-            Transaction.find({ id: req.param("id") }).exec(function(err, _trans) {
+        }).exec(function (err, _ongkir) {
+            Transaction.find({ id: req.param("id") }).exec(function (err, _trans) {
                 return res.json(_trans)
             })
         })
     },
 
-    detail:function(req, res){
-            Transaction.find({id:req.param("id")}).populate('id_customer').exec(function(err, _trans){
-                Address.find({id_customer:_trans.id_customer}).exec(function(err, _cust){
-                    return res.view('transaction/detail',{
-                        trans:_trans,
-                        cus:_cust
-                    })
+    detail: function (req, res) {
+        Transaction.find({ id: req.param("id") }).populate('id_customer').exec(function (err, _trans) {
+            Address.find({ id_customer: _trans.id_customer }).exec(function (err, _cust) {
+                return res.view('transaction/detail', {
+                    trans: _trans,
+                    cus: _cust
                 })
             })
+        })
     },
-    
-    listNotif:function(req, res){
-        Notif.find({id_receiver:req.session.Customer.id}).sort({id:'DESC'}).limit('5').exec(function(err, _notif){
+
+    listNotif: function (req, res) {
+        Notif.find({ id_receiver: req.session.Customer.id }).sort({ id: 'DESC' }).limit('5').exec(function (err, _notif) {
             return res.json(_notif)
         })
     },
 
-    update:function(req, res){
-        Transaction.update({id:req.param("id")},{
-            id_transaction_status:req.param("id_transaction_status")
-        }).then(function(_update){
-            Transaction.find({id:req.param("id")}).exec(function(err, _trans){
+    update: function (req, res) {
+        Transaction.update({ id: req.param("id") }, {
+            id_transaction_status: req.param("id_transaction_status")
+        }).then(function (_update) {
+            Transaction.find({ id: req.param("id") }).exec(function (err, _trans) {
                 return res.send(_trans)
             })
         })

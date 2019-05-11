@@ -72,9 +72,9 @@ module.exports.routes = {
 
     'GET /list/billing/web': 'BillingController.view',
     'GET /detail/billing/:id': 'BillingController.detail',
-    'GET /detail/billing' : 'BillingController.detail',       
+    'GET /detail/billing/:id' : 'BillingController.detail',       
     'GET /find/billing/web': 'BillingController.find',
-    'GET /confirmation/billing': 'BillingController.viewConfirm',
+    'GET /confirmation/billing/:id': 'BillingController.viewConfirm',
     //=========================POST WEB===================================
 
     'POST /register': 'UserController.register',

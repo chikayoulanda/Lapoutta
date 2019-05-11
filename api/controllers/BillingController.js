@@ -7,18 +7,18 @@
 
 module.exports = {
     view: function (req, res) {
-        console.log("list billing")
-        Billing.find().populate('code').exec(function (err, _bill) {
+        Billing.find().exec(function (err, _billing) {
+            console.log("jalan")
             return res.view('confirmation/billing', {
-                billing: _bill
+                billing: _billing,
             })
         })
     },
 
-    find:function(req, res){
+    find: function (req, res) {
         Billing.find({
-            select:['id', 'name', 'code', 'total', 'status_trans', 'status']
-        }).exec(function(err, _data){
+            select: ['id', 'name', 'code', 'total', 'status_trans', 'status', 'id_store']
+        }).exec(function (err, _data) {
             var data = {
                 "data": _data
             }
@@ -26,8 +26,13 @@ module.exports = {
         })
     },
 
-    viewConfirm:function(req, res){
-        return res.view('confirmation/confir')
+    viewConfirm: function (req, res) {
+        console.log("view confirm")
+        Billing.find({ id_store: req.param("id_store") }).exec(function (err, _bill) {
+            return res.view('confirmation/confir', {
+                _billing: _bill
+            })
+        })
     },
 
     confirm: function (req, res) {
@@ -41,27 +46,28 @@ module.exports = {
                 image: fileUID,
                 status: "Sudah dibayar"
             }).then(function (err, _profi) {
-                return res.redirect('/list/billing')
+                return res.redirect('/list/billing/web')
             })
         })
     },
 
-    detail: function(req, res){
-        Billing.find({id:req.param('id')}).populate('code').exec(function(err, _detail){
-            return res.view('confirmation/detail',{
-                data:_detail
+    detail: function (req, res) {
+        console.log("detail view")
+        Billing.find({ id: req.param('id') }).populate('code').exec(function (err, _detail) {
+            return res.view('confirmation/detail', {
+                data: _detail
             })
         })
     },
 
-    list: function(req, res){
-        Billing.find().populate('code').exec(function(err, _bill){
+    list: function (req, res) {
+        Billing.find().populate('code').exec(function (err, _bill) {
             return res.json(_bill)
         })
     },
 
-    detailApi: function(req, res){
-        Billing.find({id:req.param('id')}).populate('code').exec(function(err, _detail){
+    detailApi: function (req, res) {
+        Billing.find({ id: req.param('id') }).populate('code').exec(function (err, _detail) {
             return res.json(_detail)
         })
     }

@@ -116,7 +116,7 @@ $(document).ready(function (err) {
                 data: null,
                 render: function (data, type, full) {
                     if(data.status=="Belum dibayar"){
-                        return "<button data-id='" + data.id + "' class='btn btn-primary btn-confir-billing'>Konfirmasi</button> &nbsp; <button data-id='" + data.id + "' class='btn btn-danger btn-detail'>Lihat Detail</button> &nbsp";
+                        return "<button data-id='" + data.id_store + "' class='btn btn-primary btn-confir-billing'>Konfirmasi</button> &nbsp; <button data-id='" + data.id + "' class='btn btn-danger btn-detail'>Lihat Detail</button> &nbsp";
                     }
                     else if(data.status=="Sudah dibayar"){
                         return "<a href='/detail/billing/" + data.id + "'>Lihat detail</a>"
@@ -127,47 +127,28 @@ $(document).ready(function (err) {
 
     });
 });
-$(document).on('click', 'btn-confir-billing', function (e) {
-    console.log("berhasil")
-    var payment = $(this).attr('data-id');
-    var formData = new FormData();
-    formData.append('id', payment);
-    var txt;
-    var r = confirm("Anda yakin akan konfirmasi pembayaran merchnat?");
-    if (r == true) {
-        $.ajax({
-            type: "GET",
-            url: "/confirmation/billing",
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: "json",
-            complete: function (out) {
-                console.log("sukses")
-                $('#payment').DataTable().ajax.reload();
-            }
-        });
-    } else {
-        $('#payment').DataTable().ajax.reload();
 
-    }
-})
-
-$(document).on('click', 'btn-detail', function (e) {
-    console.log("berhasil")
+$(document).on('click', '.btn-confir-billing', function (e) {
     var payment = $(this).attr('data-id');
     var formData = new FormData();
     formData.append('id', payment);
         $.ajax({
-            type: "GET",
-            url: "/detail/billing",
-            data: formData,
-            processData: false,
-            contentType: false,
-            dataType: "json",
-            // complete: function (out) {
-            //     console.log("sukses")
-            //     $('#payment').DataTable().ajax.reload();
-            // }
-        });
+            url:'/confirmation/billing',
+            type:"GET",
+            
+        })
 })
+
+$(document).ready(function(){
+    // halaman default
+    $('#konten').load('home.php');
+
+    // fungsi yang mengatur konten mana yang akan ditampilkan
+    $('#menu a').click(function(){
+        // mengambil data dari href
+        var hal = $(this).attr('href');
+        // konten akan diisi oleh menu yang dipilih sesuai dengan isi dari href yang dipilih
+        $('#konten').load(hal+'.php');
+        return false;
+    });
+});

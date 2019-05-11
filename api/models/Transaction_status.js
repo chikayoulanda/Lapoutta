@@ -19,6 +19,10 @@ module.exports = {
     transaction:{
       collection:'transaction',
       via:'id_transaction_status'
+    },
+    billing:{
+      collection:'billing',
+      via:'status_trans'
     }
 
   },

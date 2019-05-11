@@ -61,6 +61,11 @@ module.exports = {
       via: 'id_store'
     },
 
+    billing:{
+      collection:'billing',
+      via:'id_store'
+    }
+
   },
 
 };

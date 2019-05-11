@@ -22,13 +22,17 @@ module.exports = {
       columnType:'double'
     },
     status_trans:{
-      type:'string'
+      model:'transaction_status'
     },
     status:{
       type:'string'
     },
     image:{
       type:'string'
+    },
+
+    id_store:{
+      model:'store'
     }
   },
 
