@@ -225,7 +225,7 @@ module.exports = {
     },
 
     ongkir: function (req, res) {
-        Transaction.update({ id: req.param("id") }, {
+        Transaction_detail.update({ id: req.param("id") }, {
             ongkir: req.param("ongkir")
         }).exec(function (err, _ongkir) {
             Transaction_detail.find({ id_transaction: req.param("id") }).exec(function (err, _trans) {
