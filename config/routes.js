@@ -170,6 +170,7 @@ module.exports.routes = {
     'POST /list/transaction/store': 'TransactionController.listTransStore',
     'POST /transaction/ongkir': 'TransactionController.ongkir',
     'POST /update/status/transaksi': 'TransactionController.update',
+    'POST /update/cart/is_active': 'TransactionController.updateIsActive',
 
     'POST /list/status/transaction': 'TransactionStatusController.listApi',
 
@@ -197,6 +198,7 @@ module.exports.routes = {
     'POST /listApi/bank': 'BankController.listApi',
 
     'POST /detail/billing': 'BillingController.detailApi',
+    'POST /list/billing': 'BillingController.list',
     //===================================GET API===================================
 
     'GET /list/review': 'ReviewController.list',
@@ -218,5 +220,4 @@ module.exports.routes = {
 
     'GET /list/status/transaksi': 'TransactionStatusController.listTransApi',
 
-    'GET /list/billing': 'BillingController.list',
 };

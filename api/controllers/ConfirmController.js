@@ -38,7 +38,23 @@ module.exports = {
                             id_request:_notif[0].no_order
                         }
                         Notif.create(_data).exec(function (err, _next) {
-                            return res.send(_next)
+                            Transaction_detail.find({id_transaction:_notif.id}).exec(function(err, _billing){
+                                Product.find({id:_billing.id_product}).populate('id_store').exec(function(err, _product){
+                                    var price=_billing.ongkir + _billing.sub_total
+                                    var _bill={
+                                        name:_product.name,
+                                        code:_notif.no_order,
+                                        total:price,
+                                        status_trans:_notif.id_transaction_status,
+                                        Status: "Belum dibayar",
+                                        id_store:_billing.id_store
+                                    }
+                                    Billing.create(_bill).then(function(err, _newBill){
+                                        return res.send(_next)
+                                    })
+                                })
+                            })
+                            
                         })
                     })
 
@@ -94,9 +110,4 @@ module.exports = {
         var _list = await Notif.find().where({ id_receiver: req.param("id_receiver") }).sort('id DESC')
         return res.json(_list)
     },
-
-    list:function (req, res){
-    
-    }
 };
-

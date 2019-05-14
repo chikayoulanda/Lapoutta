@@ -92,6 +92,37 @@
                     </div>
                   </div>
                 </div>
+                <div class="col-lg-12">
+                  <div class="form-group-inner">
+                    <div class="row">
+                      <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                        <div class="review-content-section">
+                          <div class="chat-discussion" style="height: auto">
+                            <%
+                              for(var _index=0; _index < detail.length; _index++) {
+                                var _detail = detail[_index];
+                                %>
+                            <div class="chat-message">
+                              <div class="profile-hdtc">
+                                <img class="message-avatar" src="/images/uploads/<%= _detail.id_product.gambar%>"" alt="">
+                              </div>
+                              <div class=" message">
+                                <a class="message-author" href="#">
+                                  <%= _detail.id_product.name%></a>
+                                <!-- <span class="message-date"> Mon Jan 26 2015 - 18:39:23 </span> -->
+                                <span class="message-content">
+                                  <%= _detail.id_product.price%></span>
+                                <span class="message-content">
+                                  <%= _detail.quantity%></span>
+                              </div>
+                            </div>
+                            <%}%>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </form>
             </div>
           </div>

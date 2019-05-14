@@ -19,13 +19,9 @@ module.exports = {
             columnType: 'datetime',
             autoCreatedAt: true
         },
+        
         no_order: {
             type: 'string'
-        },
-
-        ongkir: {
-            type: 'number',
-            columnType: 'double'
         },
 
         id_customer: {

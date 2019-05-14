@@ -28,7 +28,8 @@ module.exports = {
                     quantity: 1,
                     sub_total: _find[0].price,
                     id_product: _product,
-                    id_transaction: trans.id
+                    id_transaction: trans.id,
+                    ongkir:req.param("ongkir")
                 }
                 return Transaction_detail.create(_detailTrans).then(function (err, _detail) {
                     Transaction_detail.find({ id_transaction: trans.id }).exec(function (err, _transNow) {
@@ -41,7 +42,8 @@ module.exports = {
                     quantity: _quantity,
                     sub_total: _quantity * _find[0].price,
                     id_product: _product,
-                    id_transaction: trans.id
+                    id_transaction: trans.id,
+                    ongkir:req.param("ongkir")
                 }
                 return Transaction_detail.create(_detailTrans).then(function (err, _detail) {
                     Transaction_detail.find({ id_transaction: trans.id }).exec(function (err, _transNow) {
@@ -112,7 +114,8 @@ module.exports = {
                             quantity: _count,
                             sub_total: _count * _find[0].price,
                             id_product: data[0].id_product,
-                            id_transaction: _trans.id
+                            id_transaction: _trans.id,
+                            ongkir:req.param("ongkir")
                         }
                         return Transaction_detail.create(_product).then(async function (err, _cart) {
                             var _data = await Cart.destroy({ id: data[0].id }).fetch()
@@ -134,7 +137,8 @@ module.exports = {
                                 quantity: _count,
                                 sub_total: _count * _find[0].price,
                                 id_product: data[i].id_product,
-                                id_transaction: _trans.id
+                                id_transaction: _trans.id,
+                                ongkir:req.param("ongkir")
                             }
                             var _detail = await Transaction_detail.create(_product).fetch()
                             var _cart = await Cart.destroy({ id: data[i].id })
@@ -224,7 +228,7 @@ module.exports = {
         Transaction.update({ id: req.param("id") }, {
             ongkir: req.param("ongkir")
         }).exec(function (err, _ongkir) {
-            Transaction.find({ id: req.param("id") }).exec(function (err, _trans) {
+            Transaction_detail.find({ id_transaction: req.param("id") }).exec(function (err, _trans) {
                 return res.json(_trans)
             })
         })
@@ -233,9 +237,12 @@ module.exports = {
     detail: function (req, res) {
         Transaction.find({ id: req.param("id") }).populate('id_customer').exec(function (err, _trans) {
             Address.find({ id_customer: _trans.id_customer }).exec(function (err, _cust) {
-                return res.view('transaction/detail', {
-                    trans: _trans,
-                    cus: _cust
+                Transaction_detail.find().where({id_transaction:req.param("id")}).populate('id_product').exec(function(err, _detail){
+                    return res.view('transaction/detail', {
+                        trans: _trans,
+                        cus: _cust,
+                        detail: _detail
+                    })
                 })
             })
         })
@@ -257,5 +264,14 @@ module.exports = {
         })
     },
 
+    updateIsActive:function(req, res){
+        Cart.update({id:req.param("id")},{
+            is_active:req.param("is_active")
+        }).then(function(err, _cart){
+            Cart.find({id:req.param("id")}).exec(function(err, _findCart){
+                return res.send(_findCart)
+            })
+        })
+    }
 
 };
