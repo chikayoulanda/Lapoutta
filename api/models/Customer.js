@@ -57,18 +57,7 @@ module.exports = {
     review: {
       collection: 'review',
       via: 'id_customer'
-    },
-
-    sender:{
-      collection:'chat',
-      via:'id_sender'
-    },
-
-    receiver:{
-      collection:'chat',
-      via:'id_receiver'
-    }
-    
+    },    
 
   },
 

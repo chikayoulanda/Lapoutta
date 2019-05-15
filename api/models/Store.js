@@ -16,8 +16,7 @@ module.exports = {
     },
     no_telp:{
       type:'string',
-      required:true,
-      unique:true
+      required:true
     },
     address:{
       type:'ref',

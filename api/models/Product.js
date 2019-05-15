@@ -61,10 +61,6 @@ module.exports = {
       collection: 'review',
       via: 'id_product'
     },
-    image:{
-      collection:'image',
-      via:'id_product'
-    },
 
     blog:{
       collection:'blog',
