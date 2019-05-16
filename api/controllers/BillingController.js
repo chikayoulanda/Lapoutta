@@ -46,7 +46,7 @@ module.exports = {
 
     detail: function (req, res) {
         console.log("detail view")
-        Billing.find({ id: req.param('id') }).populate('code').exec(function (err, _detail) {
+        Billing.find({ id: req.param('id') }).exec(function (err, _detail) {
             console.log(_detail)
             return res.view('confirmation/detail', {
                 data: _detail
@@ -55,13 +55,13 @@ module.exports = {
     },
 
     list: function (req, res) {
-        Billing.find({id_store:req.param("id_store")}).populate('code').exec(function (err, _bill) {
+        Billing.find({id_store:req.param("id_store")}).exec(function (err, _bill) {
             return res.json(_bill)
         })
     },
 
     detailApi: function (req, res) {
-        Billing.find({ id: req.param('id') }).populate('code').exec(function (err, _detail) {
+        Billing.find({ id: req.param('id') }).exec(function (err, _detail) {
             return res.json(_detail)
         })
     }

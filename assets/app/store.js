@@ -110,7 +110,7 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, full) {
-                    return "<button data-id='" + data.id + "' class='btn btn-warning btn-status-store-update' data-toggle='modal' data-target='#modal-status-store-update'>Edit</button> &nbsp; <button data-id='" + data.id + "' class='btn btn-danger btn-status-store-delete'>Delete</button> &nbsp";
+                    return "<button data-id='" + data.id + "' class='btn btn-warning btn-status-store-update' data-toggle='modal' data-target='#modal-status-store-update'>Edit</button> &nbsp";
                 }
             }
         ]

@@ -1,10 +1,3 @@
-/**
- * Product.js
- *
- * @description :: A model definition.  Represents a database table/collection/etc.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
- */
-
 module.exports = {
   tableName: 'product',
   attributes: {
@@ -28,16 +21,16 @@ module.exports = {
       required: true
     },
 
-    gambar:{
-      type:'string'
+    gambar: {
+      type: 'string'
     },
 
     id_category: {
       model: 'category_product'
     },
     berat: {
-      type:'number',
-      columnType:'Integer'
+      type: 'number',
+      columnType: 'Integer'
     },
     id_store: {
       model: 'store'
@@ -62,9 +55,9 @@ module.exports = {
       via: 'id_product'
     },
 
-    blog:{
-      collection:'blog',
-      via:'id_product'
+    blog: {
+      collection: 'blog',
+      via: 'id_product'
     }
 
   },

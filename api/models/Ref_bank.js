@@ -1,10 +1,3 @@
-/**
- * Ref_bank.js
- *
- * @description :: A model definition.  Represents a database table/collection/etc.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
- */
-
 module.exports = {
   tableName: 'ref_bank',
 
@@ -13,7 +6,7 @@ module.exports = {
       type: 'number',
       autoIncrement: true
     },
-    
+
     name: {
       type: 'string'
     },

@@ -40,12 +40,20 @@
             <td>
               <%=_bill.status%>
             </td>
-            <td>  
-              <div style="float:left">
-                <!-- <button>Edit</button> -->
-                <a class="btn btn-warning" href="/confirmation/billing/<%=_bill.id_store%>">Konfirmasi</a> &nbsp;
-                <a class="btn btn-danger" href="/detail/billing/<%=_bill.id%>">Detail</a>
-              </div>
+            <td> 
+              <% if(_bill.status=="Belum dibayar"){%>
+                <div style="float:left">
+                    <!-- <button>Edit</button> -->
+                    <a class="btn btn-warning" href="/confirmation/billing/<%=_bill.id_store%>">Konfirmasi</a> &nbsp;
+                    <a class="btn btn-danger" href="/detail/billing/<%=_bill.id%>">Detail</a>
+                  </div>
+              <%}%>
+              <% if(_bill.status=="Sudah dibayar"){%>
+                <div style="float:left">
+                    <!-- <button>Edit</button> -->
+                    <a class="btn btn-danger" href="/detail/billing/<%=_bill.id%>">Detail</a>
+                  </div>
+              <%}%>
             </td>
           </tr>
           <%}%>

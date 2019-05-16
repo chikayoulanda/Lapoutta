@@ -1,10 +1,3 @@
-/**
- * Payment_confirmation.js
- *
- * @description :: A model definition.  Represents a database table/collection/etc.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
- */
-
 module.exports = {
   tableName:'payment_confirmation',
 
@@ -21,7 +14,8 @@ module.exports = {
       type:'string'
     },
     total:{
-      type:'string'
+      type:'number',
+      columnType: 'double'
     },
     id_transaction:{
       model:'transaction'

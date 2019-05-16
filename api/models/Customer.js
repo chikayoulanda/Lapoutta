@@ -1,10 +1,3 @@
-/**
- * Customer.js
- *
- * @description :: A model definition.  Represents a database table/collection/etc.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
- */
-
 module.exports = {
   tableName: 'customer',
   attributes: {
@@ -13,22 +6,17 @@ module.exports = {
     name: {
       type: 'string',
     },
-    
+
     no_telp: {
       type: 'string',
     },
-    
-    gender:{
-      type:'string'
+
+    gender: {
+      type: 'string'
     },
 
     image: {
       type: 'string'
-    },
-
-    address: {
-      collection: 'address',
-      via: 'id_customer'
     },
 
     id_user: {
@@ -57,7 +45,12 @@ module.exports = {
     review: {
       collection: 'review',
       via: 'id_customer'
-    },    
+    },
+
+    address: {
+      collection: 'address',
+      via: 'id_customer'
+    },
 
   },
 

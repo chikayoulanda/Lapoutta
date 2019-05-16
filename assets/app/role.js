@@ -15,7 +15,7 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, full) {
-                    return "<button data-id='" + data.id + "' class='btn btn-warning btn-role-update' data-toggle='modal' data-target='#modal-role-update'>Edit</button> &nbsp; <button data-id='" + data.id + "' class='btn btn-danger btn-role-delete'>Delete</button> &nbsp";
+                    return "<button data-id='" + data.id + "' class='btn btn-warning btn-role-update' data-toggle='modal' data-target='#modal-role-update'>Edit</button> &nbsp";
                 }
             }
         ]

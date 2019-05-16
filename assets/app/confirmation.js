@@ -32,12 +32,25 @@ $(document).ready(function (err) {
                 data: null,
                 render: function (data, type, full) {
                     if(data.id_payment_status==1){
-                        return "<button data-id='" + data.id + "' class='btn btn-primary btn-accept'>Accept</button> &nbsp; <button data-id='" + data.id + "' class='btn btn-danger btn-reject'>Reject</button> &nbsp";
+                        return "Menunggu Konfirmasi";
                     }
                     else if(data.id_payment_status==2){
                         return "Diterima"
                     }else if(data.id_payment_status=3){
                         return "Ditolak"
+                    }
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, full) {
+                    if(data.id_payment_status==1){
+                        return "<button data-id='" + data.id + "' class='btn btn-primary btn-accept'>Accept</button> &nbsp; <button data-id='" + data.id + "' class='btn btn-danger btn-reject'>Reject</button> &nbsp; <button class='btn btn-warning'><a href='/detail/pembayaran/" + data.id + "'>Lihat detail</a></button> &nbsp";
+                    }
+                    else if(data.id_payment_status==2){
+                        return "<button class='btn btn-warning'><a href='/detail/pembayaran/" + data.id + "'>Lihat detail</a></button> &nbsp";
+                    }else if(data.id_payment_status=3){
+                        return "<button class='btn btn-warning'><a href='/detail/pembayaran/" + data.id + "'>Lihat detail</a></button> &nbsp";
                     }
                 }
             }

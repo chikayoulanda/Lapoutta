@@ -1,10 +1,3 @@
-/**
- * Transaction.js
- *
- * @description :: A model definition.  Represents a database table/collection/etc.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
- */
-
 module.exports = {
     tableName: 'transaction',
 
@@ -19,7 +12,7 @@ module.exports = {
             columnType: 'datetime',
             autoCreatedAt: true
         },
-        
+
         no_order: {
             type: 'string'
         },
@@ -50,11 +43,7 @@ module.exports = {
             collection: 'shipment',
             via: 'id_transaction'
         },
-        
-        billing:{
-            collection:'billing',
-            via:'code'
-        }
+
     },
 
 };

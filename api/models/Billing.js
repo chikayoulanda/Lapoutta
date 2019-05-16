@@ -1,38 +1,31 @@
-/**
- * Billing.js
- *
- * @description :: A model definition represents a database table/collection.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
- */
-
 module.exports = {
-  tableName:'billing',
+  tableName: 'billing',
 
   attributes: {
     id: { type: 'number', autoIncrement: true, },
-    
-    name:{
-      type:'String'
+
+    name: {
+      type: 'String'
     },
-    code:{
-      model:'transaction'
-    },
-    total:{
-      type:'number',
-      columnType:'double'
-    },
-    status_trans:{
-      model:'transaction_status'
-    },
-    status:{
+    code: {
       type:'string'
     },
-    image:{
-      type:'string'
+    total: {
+      type: 'number',
+      columnType: 'double'
+    },
+    status_trans: {
+      model: 'transaction_status'
+    },
+    status: {
+      type: 'string'
+    },
+    image: {
+      type: 'string'
     },
 
-    id_store:{
-      model:'store'
+    id_store: {
+      model: 'store'
     }
   },
 

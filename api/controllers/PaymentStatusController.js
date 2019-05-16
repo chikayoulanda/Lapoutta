@@ -67,6 +67,14 @@ module.exports = {
         Payment_status.find().exec(function(err, _newStatus){
             return res.send(_newStatus)
         })       
+    },
+
+    detailPay:function(req, res){
+        Payment_confirmation.find({id:req.param("id")}).populate('id_transaction').populate('id_payment_status').exec(function(err, Pay){
+            return res.view('confirmation/payDetail',{
+                _pay:Pay
+            })
+        })
     }
 
 };

@@ -199,6 +199,8 @@ module.exports.routes = {
 
     'POST /detail/billing': 'BillingController.detailApi',
     'POST /list/billing': 'BillingController.list',
+
+    'GET /detail/pembayaran/:id': 'PaymentStatusController.detailPay',
     //===================================GET API===================================
 
     'GET /list/review': 'ReviewController.list',

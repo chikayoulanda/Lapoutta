@@ -11,7 +11,7 @@ module.exports = {
     },
 
     confirmPayment: async function (req, res) {
-        var _payment = await Payment_confirmation.find({select: ['transfer_from', 'id_transaction', 'total', 'id_bank', 'id_payment_status']})
+        var _payment = await Payment_confirmation.find({ select: ['transfer_from', 'id_transaction', 'total', 'id_bank', 'id_payment_status'] })
         var data = {
             "data": _payment
         }
@@ -35,26 +35,27 @@ module.exports = {
                             title: "Payment Accepted",
                             role: "product",
                             id_receiver: _notif[0].id_customer,
-                            id_request:_notif[0].no_order
+                            id_request: _notif[0].no_order
                         }
                         Notif.create(_data).exec(function (err, _next) {
-                            Transaction_detail.find({id_transaction:_notif.id}).exec(function(err, _billing){
-                                Product.find({id:_billing.id_product}).populate('id_store').exec(function(err, _product){
-                                    var price=_billing.ongkir + _billing.sub_total
-                                    var _bill={
-                                        name:_product.name,
-                                        code:_notif.no_order,
-                                        total:price,
-                                        status_trans:_notif.id_transaction_status,
-                                        Status: "Belum dibayar",
-                                        id_store:_billing.id_store
+                            Transaction_detail.find().where({id_transaction: _notif[0].id}).exec(function (err, _billing) {
+                                console.log(_billing)
+                                Product.find({ id: _billing.id_product }).exec(function (err, _product) {
+                                    console.log("dsdhifu")
+                                    var _bill = {
+                                        name:_product[0].id_store.name,
+                                        code:_notif[0].no_order,
+                                        total:_billing[0].sub_total+_billing[0].ongkir,
+                                        status_trans:_notif[0].id_transaction_status,
+                                        status:"Belum dibayar",
+                                        id_store:_product[0].id_store
                                     }
-                                    Billing.create(_bill).then(function(err, _newBill){
+                                    Billing.create(_bill).then(function (err, _newBill) {
                                         return res.send(_next)
                                     })
                                 })
                             })
-                            
+
                         })
                     })
 
@@ -81,7 +82,7 @@ module.exports = {
                             title: "Payment Rejected",
                             role: "product",
                             id_receiver: _notif[0].id_customer,
-                            id_request:_notif[0].no_order
+                            id_request: _notif[0].no_order
                         }
                         Notif.create(_data).exec(function (err, _next) {
                             return res.send(_next)

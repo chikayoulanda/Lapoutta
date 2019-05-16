@@ -40,7 +40,7 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, full) {
-                    return "<button data-id='" + data.id + "' class='btn btn-warning btn-list-status-update' data-toggle='modal' data-target='#modal-list-status-update'>Edit</button> &nbsp; <button data-id='" + data.id + "' class='btn btn-danger btn-list-status-delete'>Delete</button> &nbsp";
+                    return "<button data-id='" + data.id + "' class='btn btn-warning btn-list-status-update' data-toggle='modal' data-target='#modal-list-status-update'>Edit</button> &nbsp";
                 }
             }
         ]
@@ -119,7 +119,7 @@ $(document).ready(function () {
             {
                 data: null,
                 render: function (data, type, full) {
-                    return "<button data-id='" + data.id + "' class='btn btn-warning btn-category-update' data-toggle='modal' data-target='#modal-category-update'>Edit</button> &nbsp; <button data-id='" + data.id + "' class='btn btn-danger btn-category-delete'>Delete</button> &nbsp";
+                    return "<button data-id='" + data.id + "' class='btn btn-warning btn-category-update' data-toggle='modal' data-target='#modal-category-update'>Edit</button> &nbsp";
                 }
             }
         ]

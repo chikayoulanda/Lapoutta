@@ -1,30 +1,23 @@
-/**
- * Blog.js
- *
- * @description :: A model definition.  Represents a database table/collection/etc.
- * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
- */
-
 module.exports = {
-  tableName:'blog',
+  tableName: 'blog',
 
   attributes: {
-    id:{
+    id: {
       type: 'number',
-      autoIncrement:true
+      autoIncrement: true
     },
 
-    body:{
-      type:'ref',
-      columnType:'text'
+    body: {
+      type: 'ref',
+      columnType: 'text'
     },
 
-    type:{
-      type:'number'
+    type: {
+      type: 'number'
     },
 
-    id_product:{
-      model:'product'
+    id_product: {
+      model: 'product'
     }
   },
 
