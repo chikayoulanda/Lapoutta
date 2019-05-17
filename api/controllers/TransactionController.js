@@ -210,9 +210,13 @@ module.exports = {
     listApiStore: function (req, res) {
         console.log("===Masuk=====")
         Product.find({ id_store: req.param("id") }).exec(function (err, _store) {
-            Transaction_detail.find().where({ id_product: _store.id }).exec(function (err, _list) {
-                return res.send(_list)
-            })
+            if(_store.length != 0){
+                Transaction_detail.find().where({ id_product: _store.id }).exec(function (err, _list) {
+                    return res.send(_list)
+                })
+            }else{
+                return res.json("no product")
+            }
         })
     },
 
