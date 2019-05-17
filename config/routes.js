@@ -200,21 +200,21 @@ module.exports.routes = {
     'POST /detail/billing': 'BillingController.detailApi',
     'POST /list/billing': 'BillingController.list',
 
-    'GET /detail/pembayaran/:id': 'PaymentStatusController.detailPay',
     //===================================GET API===================================
-
+    
     'GET /list/review': 'ReviewController.list',
-
+    
     'GET /list/chat': 'ChatController.list',
-
+    
     'GET /list/product/mobile': 'ProductController.listApi',
     'Get /list/product2/mobile': 'ProductController.coba',
-
+    
     'GET /list/slide': 'SlideController.find',
-
+    
     'GET /list/category/api': 'CategoryProductController.listApi',
-
+    
     'GET /list/payment/status/api': 'PaymentStatusController.listApi',
+    'GET /detail/pembayaran/:id': 'PaymentStatusController.detailPay',
 
     'GET /list/product/status/api': 'ProductStatusController.listApi',
 
