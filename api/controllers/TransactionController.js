@@ -212,7 +212,10 @@ module.exports = {
         Product.find({ id_store: req.param("id") }).exec(function (err, _store) {
             if(_store.length != 0){
                 Transaction_detail.find().where({ id_product: _store.id }).exec(function (err, _list) {
-                    return res.send(_list)
+                    Transaction.find().where({id:_list.id_transaction}).exec(function(err, _trans){
+                        return res.send(_trans)
+
+                    })
                 })
             }else{
                 return res.json("no product")
@@ -231,7 +234,7 @@ module.exports = {
         Transaction_detail.update({ id: req.param("id") }, {
             ongkir: req.param("ongkir")
         }).exec(function (err, _ongkir) {
-            Transaction_detail.find({ id_transaction: req.param("id") }).exec(function (err, _trans) {
+            Transaction_detail.find({ id: req.param("id") }).exec(function (err, _trans) {
                 return res.json(_trans)
             })
         })

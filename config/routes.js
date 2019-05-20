@@ -1,6 +1,8 @@
 module.exports.routes = {
 
     //=========================GET WEB=============================
+    'GET /session/new' : 'SessionController.new',
+    'POST /session/login': 'SessionController.login',
 
     'GET /': 'UserController.authenticated',
     'GET /register': 'UserController.viewRegister',

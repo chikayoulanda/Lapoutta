@@ -27,7 +27,8 @@
       <div class="content-error">
         <div class="hpanel">
           <div class="panel-body">
-            <form action="/login" method="post" id="loginForm">
+            <form action="/login" method="POST" id="loginForm">
+              
               <div class="form-group">
                 <label class="control-label" for="email">Email</label>
                 <input type="email" placeholder="example@gmail.com" title="Please enter you username" required="" value=""
@@ -38,12 +39,8 @@
                 <input type="password" title="Please enter your password" placeholder="******" required="" value=""
                   name="password" id="password" class="form-control">
               </div>
-              <div class="checkbox login-checkbox">
-                <label>
-                  <input type="checkbox" class="i-checks"> Remember me </label>
-              </div>
               <button class="btn btn-success btn-block loginbtn">Login</button>
-              <a class="btn btn-default btn-block" href="/register">Register</a>
+              <!-- <a class="btn btn-default btn-block" href="/register">Register</a> -->
             </form>
           </div>
         </div>

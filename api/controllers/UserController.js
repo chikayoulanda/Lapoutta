@@ -7,6 +7,12 @@
 var bcrypt = require('bcrypt');
 
 module.exports = {
+    // new:function(req, res){
+    //     res.locals.flash=_.clone(req.session.flash);
+    //     res.redirect('/session/new');
+    //     // req.session.flash={};
+    // },
+
     viewRegister: function(req, res) {
         res.view('authentication/register', { layout: null })
     },
@@ -67,12 +73,11 @@ module.exports = {
                 pos_code: req.param("pso_code"),
                 id_customer: data.id,
             }
-            return Customer.create(newCustomer).then(function(_customer) {
-                    return Address.create(data).then(function(_alamat) {
+            Customer.create(newCustomer).then(function(_customer) {
+                    Address.create(data).then(function(_alamat) {
                         return res.redirect('/')
                     })
                 })
-                // }) 
         }
     },
 
