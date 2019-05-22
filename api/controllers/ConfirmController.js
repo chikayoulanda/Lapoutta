@@ -35,7 +35,7 @@ module.exports = {
                             title: "Payment Accepted",
                             role: "product",
                             id_receiver: _notif[0].id_customer,
-                            id_request: _notif[0].no_order
+                            id_request: _pay[0].id_transaction
                         }
                         Notif.create(_data).exec(function (err, _next) {
                             Transaction_detail.find().where({id_transaction: _notif[0].id}).exec(function (err, _billing) {
@@ -82,7 +82,7 @@ module.exports = {
                             title: "Payment Rejected",
                             role: "product",
                             id_receiver: _notif[0].id_customer,
-                            id_request: _notif[0].no_order
+                            id_request: _pay[0].id_transaction
                         }
                         Notif.create(_data).exec(function (err, _next) {
                             return res.send(_next)

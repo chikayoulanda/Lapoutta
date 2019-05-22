@@ -9,7 +9,7 @@ module.exports = {
     id_receiver: {
       model: 'customer'
     },
-    
+
     body: {
       type: 'ref',
       columnType: 'text'
@@ -18,7 +18,8 @@ module.exports = {
       type: 'string'
     },
     id_request: {
-      type: 'string'
+      type: 'number',
+      columnType:'integer'
     },
     role: {
       type: 'string'

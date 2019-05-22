@@ -5,6 +5,7 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken')
 
 module.exports = {
     // new:function(req, res){
@@ -81,9 +82,9 @@ module.exports = {
         }
     },
 
-    login: function (req, res) {
-        var email = req.param('email');
-        var password = req.param('password');
+    login: async function (req, res) {
+        // var email = req.param('email');
+        // var password = req.param('password');
 
         // No email/password entered
         // if (!(email && password)) {
@@ -122,60 +123,25 @@ module.exports = {
         //     });
         // })
 
-        setTimeout(function () {
-            if (!email || !password) {
-                return res.json(401, { err: 'email and password required' });
-            }
+        var user = await User.findOne({
+            email: req.param('email')
+        })
+        if (!user) return res.notFound()
 
-            sails.models.user.findOne({ email: email }, function (err, User) {
-                if (!User) {
-                    return res.json(401, { err: 'invalid email or password' });
-                }
+        await bcrypt.compare(req.param('password'), user.password)
 
-                User.verifyPassword(password, function (err, valid) {
-                    if (err) {
-                        return res.json(403, { err: 'forbidden' });
-                    }
-
-                    if (!valid) {
-                        return res.json(401, { err: 'invalid email or password' });
-                    } else {
-                        res.json({ user: User, token: sails.services.tokenauth.generateToken({ userId: User.id }) });
-
-                        // register in socket if this is a socket-request
-                        if (req.isSocket) {
-                            req.socket.User = User;
-                        }
-                    }
-                });
-            });
-        }, 200);
-    },
-
-    authSocket: function (req, res) {
-        if (!req.isSocket) {
-            return res.json(400, 'This route is for socket connections only');
-        }
-
-        var token = req.param('token');
-        if (!token) return res.json(401, 'token missing');
-
-        sails.services.tokenauth.getUser(token, function (err, User) {
-            if (err || !User) {
-                return res.json(401, 'token invalid');
-            }
-            req.socket.User = User;
-            res.json(200, User.toJSON());
-        });
-    },
-
-    deauthSocket: function (req, res) {
-        if (!req.isSocket) {
-            return res.json(400, 'This route is for socket connections only');
-        }
-
-        delete req.socket.User;
-        res.json(200, 'ok');
+        // if no errors were thrown, then grant them a new token
+        // set these config vars in config/local.js, or preferably in config/env/production.js as an environment variable
+        var token = jwt.sign({ user: user.id }, sails.config.jwtSecret, { expiresIn: sails.config.jwtExpires })
+        // set a cookie on the client side that they can't modify unless they sign out (just for web apps)
+        res.cookie('sailsjwt', token, {
+            signed: true,
+            // domain: '.yourdomain.com', // always use this in production to whitelist your domain
+            maxAge: sails.config.jwtExpires
+        })
+        // provide the token to the client in case they want to store it locally to use in the header (eg mobile/desktop apps)
+        // return res.ok(token)
+        return res.redirect('/dashboard')
     },
 
     dashboard: function (req, res) {
