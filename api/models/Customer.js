@@ -52,6 +52,11 @@ module.exports = {
       via: 'id_customer'
     },
 
+    receiver:{
+      collection:'notif',
+      via:'id_receiver'
+    }
+
   },
 
 };

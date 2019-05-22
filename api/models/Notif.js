@@ -9,6 +9,7 @@ module.exports = {
     id_receiver: {
       model: 'customer'
     },
+    
     body: {
       type: 'ref',
       columnType: 'text'

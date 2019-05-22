@@ -173,6 +173,8 @@ module.exports.routes = {
     'POST /transaction/ongkir': 'TransactionController.ongkir',
     'POST /update/status/transaksi': 'TransactionController.update',
     'POST /update/cart/is_active': 'TransactionController.updateIsActive',
+    'POST /list/notif/mobile' : 'TransactionController.listNotif',
+    'POST /detail/notif/mobile': 'TransactionController.detailNotif',
 
     'POST /list/status/transaction': 'TransactionStatusController.listApi',
 

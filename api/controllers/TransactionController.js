@@ -29,7 +29,7 @@ module.exports = {
                     sub_total: _find[0].price,
                     id_product: _product,
                     id_transaction: trans.id,
-                    ongkir:req.param("ongkir")
+                    ongkir: req.param("ongkir")
                 }
                 return Transaction_detail.create(_detailTrans).then(function (err, _detail) {
                     Transaction_detail.find({ id_transaction: trans.id }).exec(function (err, _transNow) {
@@ -43,7 +43,7 @@ module.exports = {
                     sub_total: _quantity * _find[0].price,
                     id_product: _product,
                     id_transaction: trans.id,
-                    ongkir:req.param("ongkir")
+                    ongkir: req.param("ongkir")
                 }
                 return Transaction_detail.create(_detailTrans).then(function (err, _detail) {
                     Transaction_detail.find({ id_transaction: trans.id }).exec(function (err, _transNow) {
@@ -115,7 +115,7 @@ module.exports = {
                             sub_total: _count * _find[0].price,
                             id_product: data[0].id_product,
                             id_transaction: _trans.id,
-                            ongkir:req.param("ongkir")
+                            ongkir: req.param("ongkir")
                         }
                         return Transaction_detail.create(_product).then(async function (err, _cart) {
                             var _data = await Cart.destroy({ id: data[0].id }).fetch()
@@ -138,7 +138,7 @@ module.exports = {
                                 sub_total: _count * _find[0].price,
                                 id_product: data[i].id_product,
                                 id_transaction: _trans.id,
-                                ongkir:req.param("ongkir")
+                                ongkir: req.param("ongkir")
                             }
                             var _detail = await Transaction_detail.create(_product).fetch()
                             var _cart = await Cart.destroy({ id: data[i].id })
@@ -210,14 +210,14 @@ module.exports = {
     listApiStore: function (req, res) {
         console.log("===Masuk=====")
         Product.find({ id_store: req.param("id") }).exec(function (err, _store) {
-            if(_store.length != 0){
+            if (_store.length != 0) {
                 Transaction_detail.find().where({ id_product: _store.id }).exec(function (err, _list) {
-                    Transaction.find().where({id:_list.id_transaction}).exec(function(err, _trans){
+                    Transaction.find().where({ id: _list.id_transaction }).exec(function (err, _trans) {
                         return res.send(_trans)
 
                     })
                 })
-            }else{
+            } else {
                 return res.json("no product")
             }
         })
@@ -243,7 +243,7 @@ module.exports = {
     detail: function (req, res) {
         Transaction.find({ id: req.param("id") }).populate('id_customer').exec(function (err, _trans) {
             Address.find({ id_customer: _trans.id_customer }).exec(function (err, _cust) {
-                Transaction_detail.find().where({id_transaction:req.param("id")}).populate('id_product').exec(function(err, _detail){
+                Transaction_detail.find().where({ id_transaction: req.param("id") }).populate('id_product').exec(function (err, _detail) {
                     return res.view('transaction/detail', {
                         trans: _trans,
                         cus: _cust,
@@ -255,8 +255,14 @@ module.exports = {
     },
 
     listNotif: function (req, res) {
-        Notif.find({ id_receiver: req.session.Customer.id }).sort({ id: 'DESC' }).limit('5').exec(function (err, _notif) {
+        Notif.find({ id_receiver: req.param("id") }).sort('id DESC').exec(function (err, _notif) {
             return res.json(_notif)
+        })
+    },
+
+    detailNotif: function (req, res) {
+        Notif.find({ id: req.param("id") }).exec(function (err, _detail) {
+            return res.json(_detail)
         })
     },
 
@@ -270,11 +276,11 @@ module.exports = {
         })
     },
 
-    updateIsActive:function(req, res){
-        Cart.update({id:req.param("id")},{
-            is_active:req.param("is_active")
-        }).then(function(err, _cart){
-            Cart.find({id:req.param("id")}).exec(function(err, _findCart){
+    updateIsActive: function (req, res) {
+        Cart.update({ id: req.param("id") }, {
+            is_active: req.param("is_active")
+        }).then(function (err, _cart) {
+            Cart.find({ id: req.param("id") }).exec(function (err, _findCart) {
                 return res.send(_findCart)
             })
         })
