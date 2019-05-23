@@ -126,7 +126,31 @@ module.exports = {
     },
 
     listApiStore: async function (req, res) {
-        var _list = await Product.find({ id_store: req.param("id_store") }).sort([{ id: 'ASC' }]).populate('id_store').populate('id_product_status')
+        var _list = await Product.find({ id_store: req.param("id_store") }).sort( 'id ASC' ).populate('id_store').populate('id_product_status')
+        var data = {
+            "List": _list
+        }
+        return res.json(data)
+    },
+
+    listApiStoreName: async function (req, res) {
+        var _list = await Product.find({ id_store: req.param("id_store") }).sort('name ASC').populate('id_store').populate('id_product_status')
+        var data = {
+            "List": _list
+        }
+        return res.json(data)
+    },
+
+    listApiStorePrice: async function (req, res) {
+        var _list = await Product.find({ id_store: req.param("id_store") }).sort('price ASC').populate('id_store').populate('id_product_status')
+        var data = {
+            "List": _list
+        }
+        return res.json(data)
+    },
+
+    listApiStorePrice2: async function (req, res) {
+        var _list = await Product.find({ id_store: req.param("id_store") }).sort('price DESC').populate('id_store').populate('id_product_status')
         var data = {
             "List": _list
         }
