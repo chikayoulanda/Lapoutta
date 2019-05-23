@@ -211,6 +211,9 @@ module.exports.routes = {
     'GET /list/chat': 'ChatController.list',
     
     'GET /list/product/mobile': 'ProductController.listApi',
+    'GET /list/product/mobile/name': 'ProductController.listApiName',
+    'GET /list/product/mobile/price': 'ProductController.listApiPrice',
+    'GET /list/product/mobile/price2': 'productController.listApiPrice2',
     'Get /list/product2/mobile': 'ProductController.coba',
     
     'GET /list/slide': 'SlideController.find',

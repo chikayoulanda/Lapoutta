@@ -37,8 +37,8 @@ module.exports = {
 
     profil: function (req, res) {
         console.log("......find......")
-        return Customer.find().where({ id_user: req.session.User.id }).exec(function (err, _customer) {
-            return Address.find().where({ id_customer: _customer.id }).exec(function (err, _address) {
+        return Customer.find().where({ id_user: 1 }).exec(function (err, _customer) {
+            return Address.find().where({ id_customer: 1}).exec(function (err, _address) {
                 return res.view('admin/profil', {
                     data: _customer,
                     address: _address
@@ -83,69 +83,54 @@ module.exports = {
     },
 
     login: async function (req, res) {
-        // var email = req.param('email');
-        // var password = req.param('password');
+        var email = req.param('email');
+        var password = req.param('password');
 
         // No email/password entered
-        // if (!(email && password)) {
-        //     return res.send('No email or password specified!', 500);
-        // }
-        // // Lookup the user in the database
+        if (!(email && password)) {
+            return res.send('No email or password specified!', 500);
+        }
+        // Lookup the user in the database
 
-        // User.findOne({
-        //     email: email
-        // }).populate('customer').exec(function(err, user) {
+        User.findOne({
+            email: email
+        }).populate('customer').exec(function(err, user) {
 
 
 
-        //     // Account not found
-        //     if (err || !user) {
-        //         return res.send('Invalid email and password combination!', 500);
-        //     }
-        //     Customer.findOne({ id_user: user.id }).exec(function(err, customer) {
-        //         req.session.Customer = customer
-        //     })
+            // Account not found
+            if (err || !user) {
+                return res.send('Invalid email and password combination!', 500);
+            }
+            Customer.findOne({ id_user: user.id }).exec(function(err, customer) {
+                req.session.Customer = customer
+            })
 
-        //     // Compare the passwords
-        //     bcrypt.compare(password, user.password, function(err, valid) {
-        //         if (err || !valid)
-        //             return res.send('Invalid email and password combination!', 500)
+            // Compare the passwords
+            bcrypt.compare(password, user.password, function(err, valid) {
+                if (err || !valid)
+                    return res.send('Invalid email and password combination!', 500)
 
-        //         // The user has authenticated successfully, set their session
-        //         req.session.authenticated = true;
-        //         req.session.User = user;
-        //         // console.log(result.name);
+                // The user has authenticated successfully, set their session
+                req.session.authenticated = true;
+                req.session.User = user;
+                // console.log(result.name);
 
-        //         // Redirect to protected area
-        //         // return res.json(user)
-        //         return res.redirect('/dashboard')
+                // Redirect to protected area
+                // return res.json(user)
+                return res.redirect('/dashboard')
 
-        //     });
-        // })
-
-        var user = await User.findOne({
-            email: req.param('email')
+            });
         })
-        if (!user) return res.notFound()
-
-        await bcrypt.compare(req.param('password'), user.password)
-
-        // if no errors were thrown, then grant them a new token
-        // set these config vars in config/local.js, or preferably in config/env/production.js as an environment variable
-        var token = jwt.sign({ user: user.id }, sails.config.jwtSecret, { expiresIn: sails.config.jwtExpires })
-        // set a cookie on the client side that they can't modify unless they sign out (just for web apps)
-        res.cookie('sailsjwt', token, {
-            signed: true,
-            // domain: '.yourdomain.com', // always use this in production to whitelist your domain
-            maxAge: sails.config.jwtExpires
-        })
-        // provide the token to the client in case they want to store it locally to use in the header (eg mobile/desktop apps)
-        // return res.ok(token)
-        return res.redirect('/dashboard')
     },
 
     dashboard: function (req, res) {
-        res.view('authentication/dashboard')
+        Notif.find().where({id_receiver:1}).exec(function(err, _notif){
+            res.view('authentication/dashboard',{
+                notif:_notif
+            })
+            
+        })
     },
 
     logout: function (req, res) {
@@ -219,4 +204,8 @@ module.exports = {
         }
 
     },
+
+    listNotif:function(req, res){
+        
+    }
 };
