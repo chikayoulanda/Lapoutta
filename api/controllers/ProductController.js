@@ -165,6 +165,22 @@ module.exports = {
         return res.json(data)
     },
 
+    listApiAksesoris: async function (req, res) {
+        var _list = await Product.find({ id_category: req.param("id_category") }).limit(5).sort('id DESC').populate('id_store').populate('id_product_status')
+        var data = {
+            "List": _list
+        }
+        return res.json(data)
+    },
+
+    listApiRekomendasi: async function (req, res) {
+        var _list = await Product.find().sort( 'id DESC' ).limit(5).populate('id_store').populate('id_product_status')
+        var data = {
+            "List": _list
+        }
+        return res.json(data)
+    },
+
     addImage: function (req, res) {
         req.file('gambar').upload({ dirname: '../../.tmp/public/images/uploads/', maxBytes: 10000000 }, function (err, files) {
             req.file('gambar').upload({ dirname: '../../assets/images/uploads/' }, function (err, data) {

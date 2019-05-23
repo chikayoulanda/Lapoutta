@@ -155,6 +155,7 @@ module.exports.routes = {
     'POST /lidt/product/store/price': 'ProductController.listApiStorePrice',
     'POST /lidt/product/store/price2': 'ProductController.listApiStorePrice2',
     'POST /list/product/category': 'ProductController.listApiCategory',
+    'POST /list/product/category/aksesoris': 'ProductController.listApiAksesoris',
     'POST /add/image/product': 'ProductController.addImage',
     'POST /list/product/category': 'ProductController.listProductCategory',
     'POST /search/product': 'ProductController.search',
@@ -216,7 +217,8 @@ module.exports.routes = {
     'GET /list/product/mobile': 'ProductController.listApi',
     'GET /list/product/mobile/name': 'ProductController.listApiName',
     'GET /list/product/mobile/price': 'ProductController.listApiPrice',
-    'GET /list/product/mobile/price2': 'productController.listApiPrice2',
+    'GET /list/product/mobile/price2': 'ProductController.listApiPrice2',
+    'GET /list/product/mobile/rekomendasi': 'ProductController.listApiRekomendasi',
     'Get /list/product2/mobile': 'ProductController.coba',
     
     'GET /list/slide': 'SlideController.find',
