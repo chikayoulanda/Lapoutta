@@ -23,24 +23,28 @@ module.exports = {
             address: req.param("address"),
             provinsi: req.param("provinsi"),
             kabupatenKota: req.param("kabupatenKota"),
-            kecamatan:req.param('kecamatan'),
+            kecamatan: req.param('kecamatan'),
             id_customer: req.param("id_customer"),
             no_KTP: req.param("no_KTP"),
             no_Rekening: req.param("no_Rekening"),
             id_store_status: 1
         }
-        // var data = await Store.create(newRequest).fetch()
-        // return res.send(data)
-        Store.create(newRequest).exec(function(err, _data){
-            var _data = {
-                body: "Request store form customer",
-                title: "Request Store",
-                role: "Store",
-                id_receiver: 1,
-                id_request:_data.id
-            }
-            Notif.create(_data).exec(function (err, _next) {
-                return res.send(_data)
+        Store.create(newRequest).then(function (err, _data) {
+            Store.find().sort('id DESC').exec(function (err, _newStore) {
+                Store.find().sort('id DESC').limit(1).exec(function (err, print) {
+                    console.log(_newStore[0].id)
+                    var _notif = {
+                        body: "Request store form customer",
+                        title: "Request Store",
+                        role: "Store",
+                        id_receiver: 1,
+                        id_request: _newStore[0].id
+                    }
+                    Notif.create(_notif).then(function (err, _next) {
+                        console.log("hsasia")
+                        return res.send(print)
+                    })
+                })
             })
         })
     },
@@ -73,7 +77,7 @@ module.exports = {
         Store.update({ id: req.param("id") }, {
             id_store_status: 2
         }).exec(function (err, _storeUpdate) {
-            Store.find({id:req.param("id")}).exec(function(err, _store){
+            Store.find({ id: req.param("id") }).exec(function (err, _store) {
                 var data = {
                     body: "Your store request has been received. Please manage your store",
                     title: "Store Accepted",
@@ -85,7 +89,7 @@ module.exports = {
                     return res.send();
                 })
             })
-            
+
         })
 
     },
@@ -95,7 +99,7 @@ module.exports = {
         return Store.update({ id: req.param("id") }, {
             id_store_status: 3
         }).then(function (err, _storeUpdate) {
-            Store.find({id:req.param("id")}).exec(function(_store){
+            Store.find({ id: req.param("id") }).exec(function (_store) {
                 var data = {
                     body: "Your store request has been rejected. Please request again with the request data",
                     title: "Store Rejected",
