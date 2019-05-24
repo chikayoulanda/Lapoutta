@@ -20,7 +20,7 @@ module.exports = {
     },
 
     list: async function(req, res){
-        var _review= await Review.find().where({id_product:req.param("id_product")}).populate('id_customer').populate('id_product')
+        var _review= await Review.find().where({id_product:req.param("id_product")})
         return res.send(_review)
     },
 
