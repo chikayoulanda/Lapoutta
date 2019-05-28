@@ -131,6 +131,7 @@ module.exports = {
             address: req.param("address"),
             provinsi: req.param("provinsi"),
             kabupatenKota: req.param("kabupatenKota"),
+            kecamatan:req.param("kecamatan"),
             no_KTP: req.param("no_KTP"),
             no_Rekening: req.param("no_Rekening")
         }).fetch()

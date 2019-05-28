@@ -5,14 +5,8 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 var bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken')
 
 module.exports = {
-    // new:function(req, res){
-    //     res.locals.flash=_.clone(req.session.flash);
-    //     res.redirect('/session/new');
-    //     // req.session.flash={};
-    // },
 
     viewRegister: function (req, res) {
         res.view('authentication/register', { layout: null })
@@ -28,7 +22,7 @@ module.exports = {
 
     update: function (req, res) {
         console.log("masuk update")
-        return Address.find({ id_customer: req.session.Customer.id }).populate('id_customer').exec(function (err, _customer) {
+        return Address.find({ id_customer: req.param("id") }).populate('id_customer').exec(function (err, _customer) {
             return res.view('admin/edit', {
                 data: _customer
             })
@@ -37,7 +31,7 @@ module.exports = {
 
     profil: function (req, res) {
         console.log("......find......")
-        return Customer.find().where({ id_user: 1 }).exec(function (err, _customer) {
+        return Customer.find().where({ id_user: 1 }).populate('id_user').exec(function (err, _customer) {
             return Address.find().where({ id_customer: 1}).exec(function (err, _address) {
                 return res.view('admin/profil', {
                     data: _customer,
@@ -125,7 +119,7 @@ module.exports = {
     },
 
     dashboard: function (req, res) {
-        Notif.find().where({id_receiver:1}).exec(function(err, _notif){
+        Notif.find().where({id_receiver:1}).sort('id DESC').limit(7).exec(function(err, _notif){
             res.view('authentication/dashboard',{
                 notif:_notif
             })
@@ -140,7 +134,7 @@ module.exports = {
     },
 
     upadateProfile: function (req, res) {
-        Customer.update({ id_user: req.param("id") }, {
+        Customer.update({ id: req.param("id") }, {
             name: req.param("name"),
             no_telp: req.param("no_telp"),
             gender: req.param("gender")
@@ -168,7 +162,7 @@ module.exports = {
             // })
             if (err) return res.serverError(err);
             var fileUID = files[0].fd.replace(/^.*[\\\/]/, '');
-            Customer.update({ id_user: req.session.User.id }, {
+            Customer.update({ id_user: req.param("id") }, {
                 image: fileUID
             }).then(function (err, _profi) {
                 res.redirect('/profil')
@@ -205,7 +199,8 @@ module.exports = {
 
     },
 
-    listNotif:function(req, res){
+    detailNotif:function(req, res){
         
     }
+
 };
